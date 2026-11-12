@@ -17,6 +17,7 @@
 | `src/color.mjs` | OKLCH 変換・明度カーブ・スケール生成・`alpha()` |
 | `scripts/build.mjs` | 上記から `themes/mochi-light-color-theme.json` を生成 |
 | `scripts/preview.mjs` | 色見本ページ `preview/palette.html` を生成（gitignore 済み） |
+| `themes/mochi-light-color-theme.json` | 生成物（直接編集しない） |
 
 ### 色の仕組み
 
@@ -24,12 +25,14 @@
 - 明度カーブは `gray(100)` = 背景 `#f0f1f4`、`brown(900)` = 文字 `#432922` の2点で決まる（この2色は常にそのまま出力）。
 - gray は明るい側が背景の寒色、中間で `#988c82` の暖色へ移り、暗い側は彩度を抑える。
 - 有彩色は基準色の色相・彩度を保ち、明るい段階ほど白へ、暗い段階ほど彩度を抑える。
-| `themes/mochi-light-color-theme.json` | 生成物（直接編集しない） |
+- VSCode のテーマは sRGB（HEX）しか扱えないため、範囲外になる段階は明度・色相を保って彩度を下げる。
+
+## コマンド（pnpm / [ni](https://github.com/antfu-collective/ni)）
 
 ```sh
-npm run build   # 1回ビルド
-npm run watch   # src/ の変更を監視して自動ビルド
-npm run preview # 色見本ページ preview/palette.html を生成
+nr build    # 1回ビルド
+nr watch    # src/ の変更を監視して自動ビルド
+nr preview  # 色見本ページ preview/palette.html を生成
 ```
 
 ビルド後、VSCode で `Developer: Reload Window` すると反映されます。
@@ -43,10 +46,12 @@ ln -s "$(pwd)" ~/.vscode/extensions/local.mochi-theme-0.0.1
 ```
 
 VSCode で `Developer: Reload Window` → `Preferences: Color Theme` から「Mochi Light」を選択。
+以降は `nr build`（または `nr watch`）→ Reload Window で反映されます。
+
 ### 安定版: .vsix
 
 ```sh
-npm run package
+nr package
 code --install-extension mochi-theme-0.0.1.vsix
 ```
 

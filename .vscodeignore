@@ -5,3 +5,4 @@ node_modules/**
 src/**
 scripts/**
 preview/**
+pnpm-lock.yaml
