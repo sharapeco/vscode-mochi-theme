@@ -1,0 +1,22 @@
+{
+  "name": "mochi-theme",
+  "displayName": "Mochi Light Theme",
+  "description": "A soft light theme based on Bearded Theme feat. Melle Julie Light",
+  "version": "0.0.1",
+  "publisher": "local",
+  "private": true,
+  "license": "GPL-3.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": ["Themes"],
+  "contributes": {
+    "themes": [
+      {
+        "label": "Mochi Light",
+        "uiTheme": "vs",
+        "path": "./themes/mochi-light-color-theme.json"
+      }
+    ]
+  }
+}
