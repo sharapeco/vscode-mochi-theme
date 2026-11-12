@@ -1,486 +1,486 @@
-// テーマ本体。色はすべて palette.mjs の名前で参照する。
+// テーマ本体。色はすべて semantic.mjs の役割名で参照する（hues.mjs は直接使わない）。
 // alpha(color, 0〜1) で透明度を付けられる。
 // 編集後は `npm run build` で themes/*.json を再生成すること。
 
 import { alpha } from "./color.mjs";
 
-/** @param {Record<string, string>} p palette */
-export default (p) => ({
+/** @param {typeof import('./semantic.mjs').default} s semantic colors */
+export default (s) => ({
   colors: {
-    contrastActiveBorder: alpha(p.fg, 0),
-    contrastBorder: alpha(p.fg, 0),
-    descriptionForeground: alpha(p.fg, 0.8),
-    disabledForeground: alpha(p.fg, 0.3),
-    errorForeground: p.red,
-    focusBorder: p.borderInput,
-    foreground: p.fg,
-    "icon.foreground": alpha(p.fg, 0.67),
-    "selection.background": alpha(p.primary, 0.38),
-    "activityBar.activeBackground": alpha(p.primary, 0.15),
-    "activityBar.activeBorder": p.primary,
-    "activityBar.background": p.bgSideBar,
-    "activityBar.border": p.border,
-    "activityBar.dropBorder": alpha(p.fgMuted, 0.2),
-    "activityBar.foreground": p.primary,
-    "activityBar.inactiveForeground": p.activityInactive,
-    "activityBarBadge.background": p.primary,
-    "activityBarBadge.foreground": p.bgSideBar,
-    "activityBarTop.activeBorder": p.primary,
-    "activityBarTop.dropBorder": alpha(p.fgMuted, 0.2),
-    "activityBarTop.foreground": p.primary,
-    "activityBarTop.inactiveForeground": p.activityTopInactive,
-    "badge.background": p.primary,
-    "badge.foreground": p.bgSideBar,
-    "breadcrumb.background": p.bg,
-    "breadcrumbPicker.background": p.bgLightest,
-    "button.background": alpha(p.primary, 0.5),
-    "button.border": alpha(p.fg, 0.15),
-    "button.foreground": p.fg,
-    "button.hoverBackground": alpha(p.primary, 0.6),
-    "button.secondaryBackground": p.bgSecondary,
-    "button.secondaryForeground": p.fg,
-    "button.secondaryHoverBackground": p.borderWidget,
-    "button.separator": alpha(p.fg, 0.3),
-    "charts.blue": p.blue,
-    "charts.foreground": p.fg,
-    "charts.green": p.green,
-    "charts.lines": p.fg,
-    "charts.orange": p.orange,
-    "charts.purple": p.purple,
-    "charts.red": p.red,
-    "charts.yellow": p.yellow,
-    "checkbox.foreground": p.fg,
-    "commandCenter.activeBackground": alpha(p.bgWidget, 0.38),
-    "commandCenter.activeForeground": alpha(p.fg, 0.56),
-    "commandCenter.background": p.bg,
-    "commandCenter.border": p.border,
-    "commandCenter.foreground": p.fgMuted,
-    "debugConsole.errorForeground": p.red,
-    "debugConsole.infoForeground": p.blue,
-    "debugConsole.warningForeground": p.orange,
-    "debugExceptionWidget.background": p.bgWidget,
-    "debugExceptionWidget.border": p.border,
-    "debugIcon.breakpointCurrentStackframeForeground": p.red,
-    "debugIcon.breakpointDisabledForeground": alpha(p.red, 0.5),
-    "debugIcon.breakpointForeground": p.red,
-    "debugIcon.continueForeground": p.blue,
-    "debugIcon.disconnectForeground": p.red,
-    "debugIcon.pauseForeground": p.red,
-    "debugIcon.restartForeground": p.green,
-    "debugIcon.startForeground": p.green,
-    "debugIcon.stepBackForeground": p.blue,
-    "debugIcon.stepIntoForeground": p.blue,
-    "debugIcon.stepOutForeground": p.blue,
-    "debugIcon.stepOverForeground": p.blue,
-    "debugIcon.stopForeground": p.red,
-    "debugToolBar.background": p.bgDebugToolBar,
-    "diffEditor.border": p.border,
-    "diffEditor.diagonalFill": p.bgLightest,
-    "diffEditor.insertedLineBackground": alpha(p.diffInserted, 0.1),
-    "diffEditor.insertedTextBackground": alpha(p.diffInserted, 0.1),
-    "diffEditor.insertedTextBorder": alpha(p.fg, 0),
-    "diffEditor.move.border": alpha(p.yellow, 0.3),
-    "diffEditor.moveActive.border": alpha(p.yellow, 0.7),
-    "diffEditor.removedLineBackground": alpha(p.diffRemoved, 0.1),
-    "diffEditor.removedTextBackground": alpha(p.diffRemoved, 0.1),
-    "diffEditor.removedTextBorder": alpha(p.fg, 0),
-    "diffEditor.unchangedCodeBackground": p.bgUnchanged,
-    "diffEditor.unchangedRegionBackground": p.bgUnchanged,
-    "diffEditor.unchangedRegionShadow": alpha(p.fg, 0.2),
-    "diffEditorGutter.insertedLineBackground": alpha(p.fg, 0),
-    "diffEditorGutter.removedLineBackground": alpha(p.fg, 0),
-    "diffEditorOverview.insertedForeground": alpha(p.green, 0.15),
-    "diffEditorOverview.removedForeground": alpha(p.red, 0.19),
-    "dropdown.background": p.bgWidget,
-    "dropdown.border": p.borderInput,
-    "dropdown.foreground": p.fg,
-    "dropdown.listBackground": p.bgWidget,
-    "editor.background": p.bg,
-    "editor.findMatchBackground": alpha(p.primary, 0.19),
-    "editor.findMatchBorder": alpha(p.primary, 0.38),
-    "editor.findMatchHighlightBackground": alpha(p.primary, 0.24),
-    "editor.findMatchHighlightBorder": alpha(p.primary, 0.36),
-    "editor.foldBackground": alpha(p.fg, 0.05),
-    "editor.foldPlaceholderForeground": p.fgMuted,
-    "editor.foreground": p.fg,
-    "editor.hoverHighlightBackground": alpha(p.primary, 0.3),
-    "editor.inactiveSelectionBackground": alpha(p.primary, 0.3),
-    "editor.lineHighlightBackground": alpha(p.primary, 0.06),
-    "editor.lineHighlightBorder": alpha(p.primary, 0.15),
-    "editor.linkedEditingBackground": alpha(p.linkedEditing, 0.2),
-    "editor.rangeHighlightBackground": alpha(p.primary, 0.24),
-    "editor.selectionBackground": alpha(p.primary, 0.3),
-    "editor.selectionForeground": p.fg,
-    "editor.selectionHighlightBackground": alpha(p.primary, 0.08),
-    "editor.selectionHighlightBorder": alpha(p.primary, 0.3),
-    "editor.wordHighlightBackground": alpha(p.primary, 0.12),
-    "editor.wordHighlightBorder": alpha(p.primary, 0.24),
-    "editor.wordHighlightStrongBackground": alpha(p.primary, 0.24),
-    "editorBracketHighlight.foreground1": p.yellow,
-    "editorBracketHighlight.foreground2": p.purple,
-    "editorBracketHighlight.foreground3": p.blue,
-    "editorBracketHighlight.foreground4": p.violet,
-    "editorBracketHighlight.foreground5": p.pine,
-    "editorBracketHighlight.foreground6": p.turquoise,
-    "editorBracketHighlight.unexpectedBracket.foreground": p.red,
-    "editorBracketMatch.background": alpha(p.primary, 0.3),
-    "editorBracketMatch.border": alpha(p.primary, 0.45),
-    "editorCodeLens.foreground": alpha(p.fg, 0.5),
-    "editorCursor.background": p.primary,
-    "editorCursor.foreground": p.yellow,
-    "editorError.border": alpha(p.fg, 0),
-    "editorError.foreground": p.red,
-    "editorGhostText.border": alpha(p.fg, 0),
-    "editorGhostText.foreground": alpha(p.fg, 0.44),
-    "editorGroup.border": p.border,
-    "editorGroup.dropBackground": alpha(p.primary, 0.08),
-    "editorGroupHeader.border": alpha(p.fg, 0),
-    "editorGroupHeader.noTabsBackground": p.bg,
-    "editorGroupHeader.tabsBackground": p.bgSideBar,
-    "editorGroupHeader.tabsBorder": p.border,
-    "editorGutter.addedBackground": alpha(p.green, 0.8),
-    "editorGutter.background": p.bg,
-    "editorGutter.commentRangeForeground": p.bgWidget,
-    "editorGutter.deletedBackground": alpha(p.red, 0.8),
-    "editorGutter.modifiedBackground": alpha(p.blue, 0.8),
-    "editorHoverWidget.background": p.bgWidget,
-    "editorHoverWidget.border": p.border,
-    "editorIndentGuide.activeBackground1": alpha(p.fgMuted, 0.8),
-    "editorIndentGuide.background1": alpha(p.fgMuted, 0.2),
-    "editorInfo.border": alpha(p.fg, 0),
-    "editorInlayHint.background": alpha(p.fg, 0.1),
-    "editorInlayHint.foreground": alpha(p.fg, 0.7),
-    "editorInlayHint.parameterBackground": alpha(p.fg, 0.1),
-    "editorInlayHint.parameterForeground": alpha(p.fg, 0.7),
-    "editorInlayHint.typeBackground": alpha(p.fg, 0.1),
-    "editorInlayHint.typeForeground": alpha(p.fg, 0.7),
-    "editorLineNumber.activeForeground": p.lineNumberActive,
-    "editorLineNumber.foreground": p.lineNumber,
-    "editorLink.activeForeground": p.fg,
-    "editorMarkerNavigation.background": p.bgSideBar,
-    "editorMarkerNavigationError.background": alpha(p.red, 0.56),
-    "editorMarkerNavigationInfo.background": alpha(p.blue, 0.56),
-    "editorMarkerNavigationWarning.background": alpha(p.orange, 0.56),
-    "editorOverviewRuler.addedForeground": alpha(p.green, 0.5),
-    "editorOverviewRuler.border": p.border,
-    "editorOverviewRuler.deletedForeground": alpha(p.red, 0.5),
-    "editorOverviewRuler.errorForeground": p.red,
-    "editorOverviewRuler.incomingContentForeground": alpha(p.green, 0.5),
-    "editorOverviewRuler.infoForeground": alpha(p.blue, 0.5),
-    "editorOverviewRuler.modifiedForeground": alpha(p.blue, 0.5),
-    "editorOverviewRuler.selectionHighlightForeground": alpha(p.primary, 0.5),
-    "editorOverviewRuler.warningForeground": p.orange,
-    "editorRuler.foreground": alpha(p.fgMuted, 0.2),
-    "editorStickyScroll.shadow": alpha(p.fg, 0.2),
-    "editorStickyScrollHover.background": p.bgWidgetAlt,
-    "editorSuggestWidget.background": p.bgWidget,
-    "editorSuggestWidget.border": p.border,
-    "editorSuggestWidget.foreground": p.fg,
-    "editorSuggestWidget.highlightForeground": p.yellow,
-    "editorSuggestWidget.selectedBackground": p.bgSelectedItem,
-    "editorSuggestWidget.selectedIconForeground": p.fg,
-    "editorUnnecessaryCode.border": alpha(p.fg, 0),
-    "editorUnnecessaryCode.opacity": alpha(p.fg, 0.67),
-    "editorWarning.border": alpha(p.fg, 0),
-    "editorWarning.foreground": p.yellow,
-    "editorWhitespace.foreground": alpha(p.fgMuted, 0.38),
-    "editorWidget.background": p.bgWidget,
-    "editorWidget.border": p.borderWidget,
-    "editorWidget.resizeBorder": alpha(p.primary, 0.31),
-    "errorLens.errorForeground": alpha(p.red, 0.99),
-    "errorLens.hintForeground": alpha(p.blue, 0.99),
-    "errorLens.infoForeground": alpha(p.blue, 0.99),
-    "errorLens.warningForeground": alpha(p.orange, 0.99),
-    "extensionButton.background": alpha(p.primary, 0.5),
-    "extensionButton.foreground": p.fg,
-    "extensionButton.hoverBackground": alpha(p.primary, 0.6),
-    "extensionButton.prominentBackground": alpha(p.primary, 0.62),
-    "extensionButton.prominentForeground": p.fg,
-    "extensionButton.prominentHoverBackground": p.primary,
-    "gitDecoration.conflictingResourceForeground": p.primary,
-    "gitDecoration.deletedResourceForeground": p.red,
-    "gitDecoration.ignoredResourceForeground": p.fgMuted,
-    "gitDecoration.modifiedResourceForeground": p.blue,
-    "gitDecoration.untrackedResourceForeground": p.green,
-    "multiDiffEditor.border": p.border,
-    "multiDiffEditor.headerBackground": p.bgSelectedItem,
-    "scmGraph.foreground1": p.blue,
-    "scmGraph.foreground2": p.purple,
-    "scmGraph.foreground3": p.lime,
-    "scmGraph.foreground4": p.pine,
-    "scmGraph.foreground5": p.turquoise,
-    "scmGraph.historyItemBaseRefColor": p.violet,
-    "scmGraph.historyItemHoverAdditionsForeground": p.green,
-    "scmGraph.historyItemHoverDefaultLabelBackground": p.fg,
-    "scmGraph.historyItemHoverDefaultLabelForeground": p.fg,
-    "scmGraph.historyItemHoverDeletionsForeground": p.red,
-    "scmGraph.historyItemHoverLabelForeground": p.fg,
-    "scmGraph.historyItemRefColor": p.yellow,
-    "scmGraph.historyItemRemoteRefColor": p.blue,
-    "inlineChat.background": p.bgLightest,
-    "inlineChat.border": p.borderWidget,
-    "inlineChatInput.background": p.bgWidget,
-    "inlineChatInput.border": p.borderWidget,
-    "inlineChatInput.focusBorder": p.borderInput,
-    "inlineEdit.gutterIndicator.background": alpha(p.fg, 0.5),
-    "inlineEdit.gutterIndicator.primaryBackground": alpha(p.inlineEditPrimary, 0.7),
-    "inlineEdit.gutterIndicator.primaryBorder": alpha(p.inlineEditPrimary, 0),
-    "inlineEdit.gutterIndicator.primaryForeground": p.fg,
-    "inlineEdit.gutterIndicator.secondaryBackground": alpha(p.inlineEditSecondary, 0.7),
-    "inlineEdit.gutterIndicator.secondaryBorder": alpha(p.inlineEditSecondary, 0),
-    "inlineEdit.gutterIndicator.secondaryForeground": p.fg,
-    "inlineEdit.gutterIndicator.successfulBackground": alpha(p.inlineEditSuccess, 0.7),
-    "inlineEdit.gutterIndicator.successfulBorder": alpha(p.inlineEditSuccess, 0),
-    "inlineEdit.gutterIndicator.successfulForeground": p.fg,
-    "inlineEdit.modifiedBackground": alpha(p.green, 0.15),
-    "inlineEdit.modifiedBorder": alpha(p.green, 0.8),
-    "inlineEdit.modifiedChangedLineBackground": alpha(p.green, 0.08),
-    "inlineEdit.modifiedChangedTextBackground": alpha(p.fg, 0),
-    "inlineEdit.originalBackground": alpha(p.red, 0.15),
-    "inlineEdit.originalBorder": alpha(p.red, 0.8),
-    "inlineEdit.originalChangedLineBackground": alpha(p.red, 0.8),
-    "inlineEdit.originalChangedTextBackground": alpha(p.fg, 0),
-    "inlineEdit.tabWillAcceptModifiedBorder": p.green,
-    "inlineEdit.tabWillAcceptOriginalBorder": p.red,
-    "input.background": p.bgWidget,
-    "input.border": p.borderInput,
-    "input.foreground": p.fg,
-    "input.placeholderForeground": p.placeholder,
-    "inputOption.activeBackground": p.placeholder,
-    "inputOption.activeBorder": alpha(p.fg, 0),
-    "inputOption.activeForeground": p.fg,
-    "inputOption.hoverBackground": p.borderWidget,
-    "inputValidation.errorBackground": p.bgWidget,
-    "inputValidation.errorBorder": p.yellow,
-    "inputValidation.infoBackground": p.bgWidget,
-    "inputValidation.infoBorder": p.primary,
-    "inputValidation.warningBackground": p.bgWidget,
-    "inputValidation.warningBorder": p.yellow,
-    "keybindingLabel.background": p.bgWidget,
-    "keybindingLabel.border": p.fgMuted,
-    "keybindingLabel.bottomBorder": p.fgMuted,
-    "keybindingLabel.foreground": p.fg,
-    "list.activeSelectionBackground": alpha(p.fgMuted, 0.2),
-    "list.activeSelectionForeground": p.fg,
-    "list.dropBackground": alpha(p.primary, 0.08),
-    "list.errorForeground": p.red,
-    "list.focusBackground": alpha(p.primary, 0.25),
-    "list.focusForeground": p.fg,
-    "list.highlightForeground": p.yellow,
-    "list.hoverBackground": alpha(p.fgMuted, 0.1),
-    "list.hoverForeground": p.fg,
-    "list.inactiveSelectionBackground": alpha(p.fgMuted, 0.12),
-    "list.inactiveSelectionForeground": p.fg,
-    "list.warningForeground": p.orange,
-    "menu.background": p.bgWidget,
-    "menu.border": p.border,
-    "menu.foreground": p.fg,
-    "menu.selectionForeground": p.fg,
-    "menu.separatorBackground": alpha(p.border, 0.4),
-    "menubar.selectionBackground": p.bgWidget,
-    "menubar.selectionForeground": p.fg,
-    "merge.border": p.border,
-    "merge.commonContentBackground": alpha(p.yellow, 0.19),
-    "merge.commonHeaderBackground": alpha(p.yellow, 0.5),
-    "merge.currentContentBackground": alpha(p.green, 0.19),
-    "merge.currentHeaderBackground": alpha(p.green, 0.5),
-    "merge.incomingContentBackground": alpha(p.blue, 0.19),
-    "merge.incomingHeaderBackground": alpha(p.blue, 0.5),
-    "minimap.background": p.bg,
-    "minimap.errorHighlight": p.red,
-    "minimap.findMatchHighlight": p.primary,
-    "minimap.selectionHighlight": p.primary,
-    "minimap.selectionOccurrenceHighlight": p.primary,
-    "minimap.warningHighlight": p.orange,
-    "minimapGutter.addedBackground": p.green,
-    "minimapGutter.deletedBackground": p.red,
-    "minimapGutter.modifiedBackground": p.blue,
-    "notificationCenterHeader.background": p.bgWidget,
-    "notificationCenterHeader.foreground": p.fg,
-    "notificationLink.foreground": p.yellow,
-    "notifications.background": p.bgWidget,
-    "notifications.border": p.border,
-    "notifications.foreground": p.fg,
-    "notificationsErrorIcon.foreground": p.red,
-    "notificationsInfoIcon.foreground": p.blue,
-    "notificationsWarningIcon.foreground": p.orange,
-    "panel.background": p.bgPanel,
-    "panel.border": p.border,
-    "panel.dropBorder": alpha(p.fgMuted, 0.5),
-    "panelInput.border": p.borderWidget,
-    "panelSection.border": p.border,
-    "panelSectionHeader.background": p.bgSecondary,
-    "panelSectionHeader.border": p.border,
-    "panelSectionHeader.foreground": p.fg,
-    "panelTitle.activeBorder": p.primary,
-    "panelTitle.activeForeground": p.primary,
-    "panelTitle.inactiveForeground": p.fgMuted,
-    "peekView.border": p.border,
-    "peekViewEditor.background": p.bgPeekEditor,
-    "peekViewEditor.matchHighlightBackground": alpha(p.bgWidget, 0.25),
-    "peekViewEditor.matchHighlightBorder": alpha(p.fg, 0),
-    "peekViewEditorGutter.background": p.bgPeekEditor,
-    "peekViewEditorStickyScroll.background": p.bgWidgetAlt,
-    "peekViewResult.background": p.bgPeekResult,
-    "peekViewResult.fileForeground": p.fg,
-    "peekViewResult.lineForeground": p.fg,
-    "peekViewResult.matchHighlightBackground": alpha(p.primary, 0.5),
-    "peekViewResult.selectionBackground": alpha(p.primary, 0.2),
-    "peekViewResult.selectionForeground": p.fg,
-    "peekViewTitle.background": p.bgLightest,
-    "peekViewTitleDescription.foreground": p.fg,
-    "peekViewTitleLabel.foreground": p.fg,
-    "pickerGroup.border": p.border,
-    "pickerGroup.foreground": p.fg,
-    "profileBadge.background": p.primary,
-    "profileBadge.foreground": p.bg,
-    "progressBar.background": p.yellow,
-    "quickInput.background": p.bgWidgetAlt,
-    "quickInput.foreground": p.fg,
-    "quickInputList.focusBackground": alpha(p.fgMuted, 0.2),
-    "quickInputList.focusForeground": p.fg,
-    "quickInputList.focusIconForeground": p.fg,
-    "quickInputTitle.background": p.bgSideBar,
-    "sash.hoverBorder": alpha(p.primary, 0.31),
-    "scrollbar.shadow": alpha(p.fg, 0.2),
-    "scrollbarSlider.activeBackground": alpha(p.fg, 0.3),
-    "scrollbarSlider.background": alpha(p.fg, 0.15),
-    "scrollbarSlider.hoverBackground": alpha(p.fg, 0.2),
-    "settings.headerForeground": p.fg,
-    "settings.modifiedItemIndicator": p.primary,
-    "settings.settingsHeaderHoverForeground": p.fg,
-    "sideBar.background": p.bgSideBar,
-    "sideBar.border": p.border,
-    "sideBar.foreground": alpha(p.fg, 0.8),
-    "sideBarSectionHeader.background": p.bgSideBar,
-    "sideBarSectionHeader.border": p.border,
-    "sideBarSectionHeader.foreground": p.fg,
-    "sideBarStickyScroll.background": p.bgStickyScroll,
-    "sideBarStickyScroll.shadow": alpha(p.fg, 0.2),
-    "sideBarTitle.foreground": p.fgMuted,
-    "statusBar.background": p.bg,
-    "statusBar.border": p.border,
-    "statusBar.debuggingBackground": p.statusDebuggingBg,
-    "statusBar.debuggingForeground": p.statusDebuggingFg,
-    "statusBar.foreground": alpha(p.fg, 0.5),
-    "statusBar.noFolderBackground": p.bgSideBar,
-    "statusBar.noFolderBorder": p.border,
-    "statusBar.noFolderForeground": alpha(p.fg, 0.8),
-    "statusBarItem.activeBackground": p.bgWidget,
-    "statusBarItem.compactHoverBackground": alpha(p.primary, 0.8),
-    "statusBarItem.hoverBackground": p.statusItemHover,
-    "statusBarItem.hoverForeground": p.fg,
-    "statusBarItem.prominentBackground": p.bg,
-    "statusBarItem.prominentForeground": p.bg,
-    "statusBarItem.prominentHoverBackground": p.white,
-    "statusBarItem.prominentHoverForeground": p.bg,
-    "statusBarItem.errorBackground": p.red,
-    "statusBarItem.errorForeground": p.bg,
-    "statusBarItem.errorHoverBackground": p.statusErrorHover,
-    "statusBarItem.errorHoverForeground": p.bg,
-    "statusBarItem.offlineBackground": p.purple,
-    "statusBarItem.offlineForeground": p.bg,
-    "statusBarItem.offlineHoverBackground": p.statusOfflineHover,
-    "statusBarItem.offlineHoverForeground": p.bg,
-    "statusBarItem.remoteBackground": p.pine,
-    "statusBarItem.remoteForeground": p.bg,
-    "statusBarItem.remoteHoverBackground": p.statusRemoteHover,
-    "statusBarItem.remoteHoverForeground": p.bg,
-    "statusBarItem.warningBackground": p.orange,
-    "statusBarItem.warningForeground": p.bg,
-    "statusBarItem.warningHoverBackground": p.statusWarningHover,
-    "statusBarItem.warningHoverForeground": p.bg,
-    "tab.activeBackground": p.bg,
-    "tab.activeBorder": p.bg,
-    "tab.activeBorderTop": p.primary,
-    "tab.activeForeground": p.fg,
-    "tab.border": p.border,
-    "tab.hoverBackground": p.bg,
-    "tab.inactiveBackground": p.bgSideBar,
-    "tab.inactiveForeground": p.fgMuted,
-    "tab.lastPinnedBorder": p.border,
-    "tab.unfocusedActiveBorder": p.bg,
-    "tab.unfocusedActiveForeground": p.primary,
-    "tab.unfocusedHoverBackground": p.bg,
-    "tab.unfocusedInactiveForeground": p.fgMuted,
-    "terminal.ansiBlack": p.bg,
-    "terminal.ansiBlue": p.blue,
-    "terminal.ansiBrightBlack": p.ansiBrightBlack,
-    "terminal.ansiBrightBlue": p.ansiBrightBlue,
-    "terminal.ansiBrightCyan": p.ansiBrightCyan,
-    "terminal.ansiBrightGreen": p.ansiBrightGreen,
-    "terminal.ansiBrightMagenta": p.ansiBrightMagenta,
-    "terminal.ansiBrightRed": p.ansiBrightRed,
-    "terminal.ansiBrightWhite": p.ansiBrightWhite,
-    "terminal.ansiBrightYellow": p.ansiBrightYellow,
-    "terminal.ansiCyan": p.pine,
-    "terminal.ansiGreen": p.green,
-    "terminal.ansiMagenta": p.purple,
-    "terminal.ansiRed": p.red,
-    "terminal.ansiWhite": p.fg,
-    "terminal.ansiYellow": p.yellow,
-    "terminal.background": p.bgPanel,
-    "terminal.foreground": p.fg,
-    "terminal.selectionForeground": p.fg,
-    "terminalCursor.background": p.bg,
-    "terminalCursor.foreground": p.yellow,
-    "terminalStickyScrollHover.background": p.bgWidgetAlt,
-    "textBlockQuote.background": alpha(p.blue, 0.2),
-    "textBlockQuote.border": alpha(p.blue, 0.73),
-    "textCodeBlock.background": alpha(p.blue, 0.2),
-    "textLink.activeForeground": p.primary,
-    "textLink.foreground": p.primary,
-    "textPreformat.background": p.preformatBg,
-    "textPreformat.foreground": p.preformatFg,
-    "textSeparator.foreground": p.primary,
-    "titleBar.activeBackground": p.bgTitleBar,
-    "titleBar.activeForeground": alpha(p.fg, 0.6),
-    "titleBar.border": p.border,
-    "titleBar.inactiveBackground": p.bgTitleBar,
-    "titleBar.inactiveForeground": alpha(p.fg, 0.6),
-    "toolbar.activeBackground": alpha(p.fgMuted, 0.5),
-    "toolbar.hoverBackground": alpha(p.fgMuted, 0.3),
-    "tree.indentGuidesStroke": alpha(p.fgMuted, 0.44),
-    "walkThrough.embeddedEditorBackground": p.bg,
-    "welcomePage.progress.background": p.bgWidget,
-    "welcomePage.progress.foreground": p.primary,
-    "welcomePage.tileBackground": alpha(p.fg, 0.1),
-    "welcomePage.tileBorder": alpha(p.fg, 0.2),
-    "welcomePage.tileHoverBackground": alpha(p.fg, 0.2),
-    "widget.shadow": alpha(p.fg, 0.05)
+    contrastActiveBorder: alpha(s.ui.fg, 0),
+    contrastBorder: alpha(s.ui.fg, 0),
+    descriptionForeground: alpha(s.ui.fg, 0.8),
+    disabledForeground: alpha(s.ui.fg, 0.3),
+    errorForeground: s.status.error,
+    focusBorder: s.ui.borderInput,
+    foreground: s.ui.fg,
+    "icon.foreground": alpha(s.ui.fg, 0.67),
+    "selection.background": alpha(s.ui.accent, 0.38),
+    "activityBar.activeBackground": alpha(s.ui.accent, 0.15),
+    "activityBar.activeBorder": s.ui.accent,
+    "activityBar.background": s.ui.bgSideBar,
+    "activityBar.border": s.ui.border,
+    "activityBar.dropBorder": alpha(s.ui.fgMuted, 0.2),
+    "activityBar.foreground": s.ui.accent,
+    "activityBar.inactiveForeground": s.ui.iconInactive,
+    "activityBarBadge.background": s.ui.accent,
+    "activityBarBadge.foreground": s.ui.bgSideBar,
+    "activityBarTop.activeBorder": s.ui.accent,
+    "activityBarTop.dropBorder": alpha(s.ui.fgMuted, 0.2),
+    "activityBarTop.foreground": s.ui.accent,
+    "activityBarTop.inactiveForeground": s.ui.iconInactiveTop,
+    "badge.background": s.ui.accent,
+    "badge.foreground": s.ui.bgSideBar,
+    "breadcrumb.background": s.ui.bg,
+    "breadcrumbPicker.background": s.ui.bgLightest,
+    "button.background": alpha(s.ui.accent, 0.5),
+    "button.border": alpha(s.ui.fg, 0.15),
+    "button.foreground": s.ui.fg,
+    "button.hoverBackground": alpha(s.ui.accent, 0.6),
+    "button.secondaryBackground": s.ui.bgSecondary,
+    "button.secondaryForeground": s.ui.fg,
+    "button.secondaryHoverBackground": s.ui.borderWidget,
+    "button.separator": alpha(s.ui.fg, 0.3),
+    "charts.blue": s.chart.blue,
+    "charts.foreground": s.ui.fg,
+    "charts.green": s.chart.green,
+    "charts.lines": s.ui.fg,
+    "charts.orange": s.chart.orange,
+    "charts.purple": s.chart.purple,
+    "charts.red": s.chart.red,
+    "charts.yellow": s.chart.yellow,
+    "checkbox.foreground": s.ui.fg,
+    "commandCenter.activeBackground": alpha(s.ui.bgWidget, 0.38),
+    "commandCenter.activeForeground": alpha(s.ui.fg, 0.56),
+    "commandCenter.background": s.ui.bg,
+    "commandCenter.border": s.ui.border,
+    "commandCenter.foreground": s.ui.fgMuted,
+    "debugConsole.errorForeground": s.status.error,
+    "debugConsole.infoForeground": s.status.info,
+    "debugConsole.warningForeground": s.status.warning,
+    "debugExceptionWidget.background": s.ui.bgWidget,
+    "debugExceptionWidget.border": s.ui.border,
+    "debugIcon.breakpointCurrentStackframeForeground": s.status.error,
+    "debugIcon.breakpointDisabledForeground": alpha(s.status.error, 0.5),
+    "debugIcon.breakpointForeground": s.status.error,
+    "debugIcon.continueForeground": s.status.info,
+    "debugIcon.disconnectForeground": s.status.error,
+    "debugIcon.pauseForeground": s.status.error,
+    "debugIcon.restartForeground": s.status.success,
+    "debugIcon.startForeground": s.status.success,
+    "debugIcon.stepBackForeground": s.status.info,
+    "debugIcon.stepIntoForeground": s.status.info,
+    "debugIcon.stepOutForeground": s.status.info,
+    "debugIcon.stepOverForeground": s.status.info,
+    "debugIcon.stopForeground": s.status.error,
+    "debugToolBar.background": s.ui.bgDebugToolBar,
+    "diffEditor.border": s.ui.border,
+    "diffEditor.diagonalFill": s.ui.bgLightest,
+    "diffEditor.insertedLineBackground": alpha(s.diff.inserted, 0.1),
+    "diffEditor.insertedTextBackground": alpha(s.diff.inserted, 0.1),
+    "diffEditor.insertedTextBorder": alpha(s.ui.fg, 0),
+    "diffEditor.move.border": alpha(s.diff.moved, 0.3),
+    "diffEditor.moveActive.border": alpha(s.diff.moved, 0.7),
+    "diffEditor.removedLineBackground": alpha(s.diff.removed, 0.1),
+    "diffEditor.removedTextBackground": alpha(s.diff.removed, 0.1),
+    "diffEditor.removedTextBorder": alpha(s.ui.fg, 0),
+    "diffEditor.unchangedCodeBackground": s.ui.bgUnchanged,
+    "diffEditor.unchangedRegionBackground": s.ui.bgUnchanged,
+    "diffEditor.unchangedRegionShadow": alpha(s.ui.fg, 0.2),
+    "diffEditorGutter.insertedLineBackground": alpha(s.ui.fg, 0),
+    "diffEditorGutter.removedLineBackground": alpha(s.ui.fg, 0),
+    "diffEditorOverview.insertedForeground": alpha(s.diff.inserted, 0.15),
+    "diffEditorOverview.removedForeground": alpha(s.diff.removed, 0.19),
+    "dropdown.background": s.ui.bgWidget,
+    "dropdown.border": s.ui.borderInput,
+    "dropdown.foreground": s.ui.fg,
+    "dropdown.listBackground": s.ui.bgWidget,
+    "editor.background": s.ui.bg,
+    "editor.findMatchBackground": alpha(s.ui.accent, 0.19),
+    "editor.findMatchBorder": alpha(s.ui.accent, 0.38),
+    "editor.findMatchHighlightBackground": alpha(s.ui.accent, 0.24),
+    "editor.findMatchHighlightBorder": alpha(s.ui.accent, 0.36),
+    "editor.foldBackground": alpha(s.ui.fg, 0.05),
+    "editor.foldPlaceholderForeground": s.ui.fgMuted,
+    "editor.foreground": s.ui.fg,
+    "editor.hoverHighlightBackground": alpha(s.ui.accent, 0.3),
+    "editor.inactiveSelectionBackground": alpha(s.ui.accent, 0.3),
+    "editor.lineHighlightBackground": alpha(s.ui.accent, 0.06),
+    "editor.lineHighlightBorder": alpha(s.ui.accent, 0.15),
+    "editor.linkedEditingBackground": alpha(s.ui.linkedEditing, 0.2),
+    "editor.rangeHighlightBackground": alpha(s.ui.accent, 0.24),
+    "editor.selectionBackground": alpha(s.ui.accent, 0.3),
+    "editor.selectionForeground": s.ui.fg,
+    "editor.selectionHighlightBackground": alpha(s.ui.accent, 0.08),
+    "editor.selectionHighlightBorder": alpha(s.ui.accent, 0.3),
+    "editor.wordHighlightBackground": alpha(s.ui.accent, 0.12),
+    "editor.wordHighlightBorder": alpha(s.ui.accent, 0.24),
+    "editor.wordHighlightStrongBackground": alpha(s.ui.accent, 0.24),
+    "editorBracketHighlight.foreground1": s.bracket[1],
+    "editorBracketHighlight.foreground2": s.bracket[2],
+    "editorBracketHighlight.foreground3": s.bracket[3],
+    "editorBracketHighlight.foreground4": s.bracket[4],
+    "editorBracketHighlight.foreground5": s.bracket[5],
+    "editorBracketHighlight.foreground6": s.bracket[6],
+    "editorBracketHighlight.unexpectedBracket.foreground": s.status.error,
+    "editorBracketMatch.background": alpha(s.ui.accent, 0.3),
+    "editorBracketMatch.border": alpha(s.ui.accent, 0.45),
+    "editorCodeLens.foreground": alpha(s.ui.fg, 0.5),
+    "editorCursor.background": s.ui.accent,
+    "editorCursor.foreground": s.ui.cursor,
+    "editorError.border": alpha(s.ui.fg, 0),
+    "editorError.foreground": s.status.error,
+    "editorGhostText.border": alpha(s.ui.fg, 0),
+    "editorGhostText.foreground": alpha(s.ui.fg, 0.44),
+    "editorGroup.border": s.ui.border,
+    "editorGroup.dropBackground": alpha(s.ui.accent, 0.08),
+    "editorGroupHeader.border": alpha(s.ui.fg, 0),
+    "editorGroupHeader.noTabsBackground": s.ui.bg,
+    "editorGroupHeader.tabsBackground": s.ui.bgSideBar,
+    "editorGroupHeader.tabsBorder": s.ui.border,
+    "editorGutter.addedBackground": alpha(s.diff.inserted, 0.8),
+    "editorGutter.background": s.ui.bg,
+    "editorGutter.commentRangeForeground": s.ui.bgWidget,
+    "editorGutter.deletedBackground": alpha(s.diff.removed, 0.8),
+    "editorGutter.modifiedBackground": alpha(s.diff.modified, 0.8),
+    "editorHoverWidget.background": s.ui.bgWidget,
+    "editorHoverWidget.border": s.ui.border,
+    "editorIndentGuide.activeBackground1": alpha(s.ui.fgMuted, 0.8),
+    "editorIndentGuide.background1": alpha(s.ui.fgMuted, 0.2),
+    "editorInfo.border": alpha(s.ui.fg, 0),
+    "editorInlayHint.background": alpha(s.ui.fg, 0.1),
+    "editorInlayHint.foreground": alpha(s.ui.fg, 0.7),
+    "editorInlayHint.parameterBackground": alpha(s.ui.fg, 0.1),
+    "editorInlayHint.parameterForeground": alpha(s.ui.fg, 0.7),
+    "editorInlayHint.typeBackground": alpha(s.ui.fg, 0.1),
+    "editorInlayHint.typeForeground": alpha(s.ui.fg, 0.7),
+    "editorLineNumber.activeForeground": s.ui.lineNumberActive,
+    "editorLineNumber.foreground": s.ui.lineNumber,
+    "editorLink.activeForeground": s.ui.fg,
+    "editorMarkerNavigation.background": s.ui.bgSideBar,
+    "editorMarkerNavigationError.background": alpha(s.status.error, 0.56),
+    "editorMarkerNavigationInfo.background": alpha(s.status.info, 0.56),
+    "editorMarkerNavigationWarning.background": alpha(s.status.warning, 0.56),
+    "editorOverviewRuler.addedForeground": alpha(s.diff.inserted, 0.5),
+    "editorOverviewRuler.border": s.ui.border,
+    "editorOverviewRuler.deletedForeground": alpha(s.diff.removed, 0.5),
+    "editorOverviewRuler.errorForeground": s.status.error,
+    "editorOverviewRuler.incomingContentForeground": alpha(s.diff.inserted, 0.5),
+    "editorOverviewRuler.infoForeground": alpha(s.status.info, 0.5),
+    "editorOverviewRuler.modifiedForeground": alpha(s.diff.modified, 0.5),
+    "editorOverviewRuler.selectionHighlightForeground": alpha(s.ui.accent, 0.5),
+    "editorOverviewRuler.warningForeground": s.status.warning,
+    "editorRuler.foreground": alpha(s.ui.fgMuted, 0.2),
+    "editorStickyScroll.shadow": alpha(s.ui.fg, 0.2),
+    "editorStickyScrollHover.background": s.ui.bgWidgetAlt,
+    "editorSuggestWidget.background": s.ui.bgWidget,
+    "editorSuggestWidget.border": s.ui.border,
+    "editorSuggestWidget.foreground": s.ui.fg,
+    "editorSuggestWidget.highlightForeground": s.ui.highlight,
+    "editorSuggestWidget.selectedBackground": s.ui.bgSelectedItem,
+    "editorSuggestWidget.selectedIconForeground": s.ui.fg,
+    "editorUnnecessaryCode.border": alpha(s.ui.fg, 0),
+    "editorUnnecessaryCode.opacity": alpha(s.ui.fg, 0.67),
+    "editorWarning.border": alpha(s.ui.fg, 0),
+    "editorWarning.foreground": s.status.caution,
+    "editorWhitespace.foreground": alpha(s.ui.fgMuted, 0.38),
+    "editorWidget.background": s.ui.bgWidget,
+    "editorWidget.border": s.ui.borderWidget,
+    "editorWidget.resizeBorder": alpha(s.ui.accent, 0.31),
+    "errorLens.errorForeground": alpha(s.status.error, 0.99),
+    "errorLens.hintForeground": alpha(s.status.info, 0.99),
+    "errorLens.infoForeground": alpha(s.status.info, 0.99),
+    "errorLens.warningForeground": alpha(s.status.warning, 0.99),
+    "extensionButton.background": alpha(s.ui.accent, 0.5),
+    "extensionButton.foreground": s.ui.fg,
+    "extensionButton.hoverBackground": alpha(s.ui.accent, 0.6),
+    "extensionButton.prominentBackground": alpha(s.ui.accent, 0.62),
+    "extensionButton.prominentForeground": s.ui.fg,
+    "extensionButton.prominentHoverBackground": s.ui.accent,
+    "gitDecoration.conflictingResourceForeground": s.ui.accent,
+    "gitDecoration.deletedResourceForeground": s.diff.removed,
+    "gitDecoration.ignoredResourceForeground": s.ui.fgMuted,
+    "gitDecoration.modifiedResourceForeground": s.diff.modified,
+    "gitDecoration.untrackedResourceForeground": s.diff.inserted,
+    "multiDiffEditor.border": s.ui.border,
+    "multiDiffEditor.headerBackground": s.ui.bgSelectedItem,
+    "scmGraph.foreground1": s.scmGraph[1],
+    "scmGraph.foreground2": s.scmGraph[2],
+    "scmGraph.foreground3": s.scmGraph[3],
+    "scmGraph.foreground4": s.scmGraph[4],
+    "scmGraph.foreground5": s.scmGraph[5],
+    "scmGraph.historyItemBaseRefColor": s.scmGraph.baseRef,
+    "scmGraph.historyItemHoverAdditionsForeground": s.diff.inserted,
+    "scmGraph.historyItemHoverDefaultLabelBackground": s.ui.fg,
+    "scmGraph.historyItemHoverDefaultLabelForeground": s.ui.fg,
+    "scmGraph.historyItemHoverDeletionsForeground": s.diff.removed,
+    "scmGraph.historyItemHoverLabelForeground": s.ui.fg,
+    "scmGraph.historyItemRefColor": s.scmGraph.ref,
+    "scmGraph.historyItemRemoteRefColor": s.scmGraph.remoteRef,
+    "inlineChat.background": s.ui.bgLightest,
+    "inlineChat.border": s.ui.borderWidget,
+    "inlineChatInput.background": s.ui.bgWidget,
+    "inlineChatInput.border": s.ui.borderWidget,
+    "inlineChatInput.focusBorder": s.ui.borderInput,
+    "inlineEdit.gutterIndicator.background": alpha(s.ui.fg, 0.5),
+    "inlineEdit.gutterIndicator.primaryBackground": alpha(s.diff.inlineEditPrimary, 0.7),
+    "inlineEdit.gutterIndicator.primaryBorder": alpha(s.diff.inlineEditPrimary, 0),
+    "inlineEdit.gutterIndicator.primaryForeground": s.ui.fg,
+    "inlineEdit.gutterIndicator.secondaryBackground": alpha(s.diff.inlineEditSecondary, 0.7),
+    "inlineEdit.gutterIndicator.secondaryBorder": alpha(s.diff.inlineEditSecondary, 0),
+    "inlineEdit.gutterIndicator.secondaryForeground": s.ui.fg,
+    "inlineEdit.gutterIndicator.successfulBackground": alpha(s.diff.inlineEditSuccess, 0.7),
+    "inlineEdit.gutterIndicator.successfulBorder": alpha(s.diff.inlineEditSuccess, 0),
+    "inlineEdit.gutterIndicator.successfulForeground": s.ui.fg,
+    "inlineEdit.modifiedBackground": alpha(s.diff.inserted, 0.15),
+    "inlineEdit.modifiedBorder": alpha(s.diff.inserted, 0.8),
+    "inlineEdit.modifiedChangedLineBackground": alpha(s.diff.inserted, 0.08),
+    "inlineEdit.modifiedChangedTextBackground": alpha(s.ui.fg, 0),
+    "inlineEdit.originalBackground": alpha(s.diff.removed, 0.15),
+    "inlineEdit.originalBorder": alpha(s.diff.removed, 0.8),
+    "inlineEdit.originalChangedLineBackground": alpha(s.diff.removed, 0.8),
+    "inlineEdit.originalChangedTextBackground": alpha(s.ui.fg, 0),
+    "inlineEdit.tabWillAcceptModifiedBorder": s.diff.inserted,
+    "inlineEdit.tabWillAcceptOriginalBorder": s.diff.removed,
+    "input.background": s.ui.bgWidget,
+    "input.border": s.ui.borderInput,
+    "input.foreground": s.ui.fg,
+    "input.placeholderForeground": s.ui.placeholder,
+    "inputOption.activeBackground": s.ui.placeholder,
+    "inputOption.activeBorder": alpha(s.ui.fg, 0),
+    "inputOption.activeForeground": s.ui.fg,
+    "inputOption.hoverBackground": s.ui.borderWidget,
+    "inputValidation.errorBackground": s.ui.bgWidget,
+    "inputValidation.errorBorder": s.status.caution,
+    "inputValidation.infoBackground": s.ui.bgWidget,
+    "inputValidation.infoBorder": s.ui.accent,
+    "inputValidation.warningBackground": s.ui.bgWidget,
+    "inputValidation.warningBorder": s.status.caution,
+    "keybindingLabel.background": s.ui.bgWidget,
+    "keybindingLabel.border": s.ui.fgMuted,
+    "keybindingLabel.bottomBorder": s.ui.fgMuted,
+    "keybindingLabel.foreground": s.ui.fg,
+    "list.activeSelectionBackground": alpha(s.ui.fgMuted, 0.2),
+    "list.activeSelectionForeground": s.ui.fg,
+    "list.dropBackground": alpha(s.ui.accent, 0.08),
+    "list.errorForeground": s.status.error,
+    "list.focusBackground": alpha(s.ui.accent, 0.25),
+    "list.focusForeground": s.ui.fg,
+    "list.highlightForeground": s.ui.highlight,
+    "list.hoverBackground": alpha(s.ui.fgMuted, 0.1),
+    "list.hoverForeground": s.ui.fg,
+    "list.inactiveSelectionBackground": alpha(s.ui.fgMuted, 0.12),
+    "list.inactiveSelectionForeground": s.ui.fg,
+    "list.warningForeground": s.status.warning,
+    "menu.background": s.ui.bgWidget,
+    "menu.border": s.ui.border,
+    "menu.foreground": s.ui.fg,
+    "menu.selectionForeground": s.ui.fg,
+    "menu.separatorBackground": alpha(s.ui.border, 0.4),
+    "menubar.selectionBackground": s.ui.bgWidget,
+    "menubar.selectionForeground": s.ui.fg,
+    "merge.border": s.ui.border,
+    "merge.commonContentBackground": alpha(s.diff.moved, 0.19),
+    "merge.commonHeaderBackground": alpha(s.diff.moved, 0.5),
+    "merge.currentContentBackground": alpha(s.diff.inserted, 0.19),
+    "merge.currentHeaderBackground": alpha(s.diff.inserted, 0.5),
+    "merge.incomingContentBackground": alpha(s.diff.modified, 0.19),
+    "merge.incomingHeaderBackground": alpha(s.diff.modified, 0.5),
+    "minimap.background": s.ui.bg,
+    "minimap.errorHighlight": s.status.error,
+    "minimap.findMatchHighlight": s.ui.accent,
+    "minimap.selectionHighlight": s.ui.accent,
+    "minimap.selectionOccurrenceHighlight": s.ui.accent,
+    "minimap.warningHighlight": s.status.warning,
+    "minimapGutter.addedBackground": s.diff.inserted,
+    "minimapGutter.deletedBackground": s.diff.removed,
+    "minimapGutter.modifiedBackground": s.diff.modified,
+    "notificationCenterHeader.background": s.ui.bgWidget,
+    "notificationCenterHeader.foreground": s.ui.fg,
+    "notificationLink.foreground": s.ui.highlight,
+    "notifications.background": s.ui.bgWidget,
+    "notifications.border": s.ui.border,
+    "notifications.foreground": s.ui.fg,
+    "notificationsErrorIcon.foreground": s.status.error,
+    "notificationsInfoIcon.foreground": s.status.info,
+    "notificationsWarningIcon.foreground": s.status.warning,
+    "panel.background": s.ui.bgPanel,
+    "panel.border": s.ui.border,
+    "panel.dropBorder": alpha(s.ui.fgMuted, 0.5),
+    "panelInput.border": s.ui.borderWidget,
+    "panelSection.border": s.ui.border,
+    "panelSectionHeader.background": s.ui.bgSecondary,
+    "panelSectionHeader.border": s.ui.border,
+    "panelSectionHeader.foreground": s.ui.fg,
+    "panelTitle.activeBorder": s.ui.accent,
+    "panelTitle.activeForeground": s.ui.accent,
+    "panelTitle.inactiveForeground": s.ui.fgMuted,
+    "peekView.border": s.ui.border,
+    "peekViewEditor.background": s.ui.bgPeekEditor,
+    "peekViewEditor.matchHighlightBackground": alpha(s.ui.bgWidget, 0.25),
+    "peekViewEditor.matchHighlightBorder": alpha(s.ui.fg, 0),
+    "peekViewEditorGutter.background": s.ui.bgPeekEditor,
+    "peekViewEditorStickyScroll.background": s.ui.bgWidgetAlt,
+    "peekViewResult.background": s.ui.bgPeekResult,
+    "peekViewResult.fileForeground": s.ui.fg,
+    "peekViewResult.lineForeground": s.ui.fg,
+    "peekViewResult.matchHighlightBackground": alpha(s.ui.accent, 0.5),
+    "peekViewResult.selectionBackground": alpha(s.ui.accent, 0.2),
+    "peekViewResult.selectionForeground": s.ui.fg,
+    "peekViewTitle.background": s.ui.bgLightest,
+    "peekViewTitleDescription.foreground": s.ui.fg,
+    "peekViewTitleLabel.foreground": s.ui.fg,
+    "pickerGroup.border": s.ui.border,
+    "pickerGroup.foreground": s.ui.fg,
+    "profileBadge.background": s.ui.accent,
+    "profileBadge.foreground": s.ui.bg,
+    "progressBar.background": s.ui.highlight,
+    "quickInput.background": s.ui.bgWidgetAlt,
+    "quickInput.foreground": s.ui.fg,
+    "quickInputList.focusBackground": alpha(s.ui.fgMuted, 0.2),
+    "quickInputList.focusForeground": s.ui.fg,
+    "quickInputList.focusIconForeground": s.ui.fg,
+    "quickInputTitle.background": s.ui.bgSideBar,
+    "sash.hoverBorder": alpha(s.ui.accent, 0.31),
+    "scrollbar.shadow": alpha(s.ui.fg, 0.2),
+    "scrollbarSlider.activeBackground": alpha(s.ui.fg, 0.3),
+    "scrollbarSlider.background": alpha(s.ui.fg, 0.15),
+    "scrollbarSlider.hoverBackground": alpha(s.ui.fg, 0.2),
+    "settings.headerForeground": s.ui.fg,
+    "settings.modifiedItemIndicator": s.ui.accent,
+    "settings.settingsHeaderHoverForeground": s.ui.fg,
+    "sideBar.background": s.ui.bgSideBar,
+    "sideBar.border": s.ui.border,
+    "sideBar.foreground": alpha(s.ui.fg, 0.8),
+    "sideBarSectionHeader.background": s.ui.bgSideBar,
+    "sideBarSectionHeader.border": s.ui.border,
+    "sideBarSectionHeader.foreground": s.ui.fg,
+    "sideBarStickyScroll.background": s.ui.bgStickyScroll,
+    "sideBarStickyScroll.shadow": alpha(s.ui.fg, 0.2),
+    "sideBarTitle.foreground": s.ui.fgMuted,
+    "statusBar.background": s.ui.bg,
+    "statusBar.border": s.ui.border,
+    "statusBar.debuggingBackground": s.status.debuggingBg,
+    "statusBar.debuggingForeground": s.status.debuggingFg,
+    "statusBar.foreground": alpha(s.ui.fg, 0.5),
+    "statusBar.noFolderBackground": s.ui.bgSideBar,
+    "statusBar.noFolderBorder": s.ui.border,
+    "statusBar.noFolderForeground": alpha(s.ui.fg, 0.8),
+    "statusBarItem.activeBackground": s.ui.bgWidget,
+    "statusBarItem.compactHoverBackground": alpha(s.ui.accent, 0.8),
+    "statusBarItem.hoverBackground": s.status.itemHover,
+    "statusBarItem.hoverForeground": s.ui.fg,
+    "statusBarItem.prominentBackground": s.ui.bg,
+    "statusBarItem.prominentForeground": s.ui.bg,
+    "statusBarItem.prominentHoverBackground": s.ui.white,
+    "statusBarItem.prominentHoverForeground": s.ui.bg,
+    "statusBarItem.errorBackground": s.status.error,
+    "statusBarItem.errorForeground": s.ui.bg,
+    "statusBarItem.errorHoverBackground": s.status.errorHover,
+    "statusBarItem.errorHoverForeground": s.ui.bg,
+    "statusBarItem.offlineBackground": s.status.offline,
+    "statusBarItem.offlineForeground": s.ui.bg,
+    "statusBarItem.offlineHoverBackground": s.status.offlineHover,
+    "statusBarItem.offlineHoverForeground": s.ui.bg,
+    "statusBarItem.remoteBackground": s.status.remote,
+    "statusBarItem.remoteForeground": s.ui.bg,
+    "statusBarItem.remoteHoverBackground": s.status.remoteHover,
+    "statusBarItem.remoteHoverForeground": s.ui.bg,
+    "statusBarItem.warningBackground": s.status.warning,
+    "statusBarItem.warningForeground": s.ui.bg,
+    "statusBarItem.warningHoverBackground": s.status.warningHover,
+    "statusBarItem.warningHoverForeground": s.ui.bg,
+    "tab.activeBackground": s.ui.bg,
+    "tab.activeBorder": s.ui.bg,
+    "tab.activeBorderTop": s.ui.accent,
+    "tab.activeForeground": s.ui.fg,
+    "tab.border": s.ui.border,
+    "tab.hoverBackground": s.ui.bg,
+    "tab.inactiveBackground": s.ui.bgSideBar,
+    "tab.inactiveForeground": s.ui.fgMuted,
+    "tab.lastPinnedBorder": s.ui.border,
+    "tab.unfocusedActiveBorder": s.ui.bg,
+    "tab.unfocusedActiveForeground": s.ui.accent,
+    "tab.unfocusedHoverBackground": s.ui.bg,
+    "tab.unfocusedInactiveForeground": s.ui.fgMuted,
+    "terminal.ansiBlack": s.ansi.black,
+    "terminal.ansiBlue": s.ansi.blue,
+    "terminal.ansiBrightBlack": s.ansi.brightBlack,
+    "terminal.ansiBrightBlue": s.ansi.brightBlue,
+    "terminal.ansiBrightCyan": s.ansi.brightCyan,
+    "terminal.ansiBrightGreen": s.ansi.brightGreen,
+    "terminal.ansiBrightMagenta": s.ansi.brightMagenta,
+    "terminal.ansiBrightRed": s.ansi.brightRed,
+    "terminal.ansiBrightWhite": s.ansi.brightWhite,
+    "terminal.ansiBrightYellow": s.ansi.brightYellow,
+    "terminal.ansiCyan": s.ansi.cyan,
+    "terminal.ansiGreen": s.ansi.green,
+    "terminal.ansiMagenta": s.ansi.magenta,
+    "terminal.ansiRed": s.ansi.red,
+    "terminal.ansiWhite": s.ansi.white,
+    "terminal.ansiYellow": s.ansi.yellow,
+    "terminal.background": s.ui.bgPanel,
+    "terminal.foreground": s.ui.fg,
+    "terminal.selectionForeground": s.ui.fg,
+    "terminalCursor.background": s.ui.bg,
+    "terminalCursor.foreground": s.ui.cursor,
+    "terminalStickyScrollHover.background": s.ui.bgWidgetAlt,
+    "textBlockQuote.background": alpha(s.status.info, 0.2),
+    "textBlockQuote.border": alpha(s.status.info, 0.73),
+    "textCodeBlock.background": alpha(s.status.info, 0.2),
+    "textLink.activeForeground": s.ui.accent,
+    "textLink.foreground": s.ui.accent,
+    "textPreformat.background": s.ui.preformatBg,
+    "textPreformat.foreground": s.ui.preformatFg,
+    "textSeparator.foreground": s.ui.accent,
+    "titleBar.activeBackground": s.ui.bgTitleBar,
+    "titleBar.activeForeground": alpha(s.ui.fg, 0.6),
+    "titleBar.border": s.ui.border,
+    "titleBar.inactiveBackground": s.ui.bgTitleBar,
+    "titleBar.inactiveForeground": alpha(s.ui.fg, 0.6),
+    "toolbar.activeBackground": alpha(s.ui.fgMuted, 0.5),
+    "toolbar.hoverBackground": alpha(s.ui.fgMuted, 0.3),
+    "tree.indentGuidesStroke": alpha(s.ui.fgMuted, 0.44),
+    "walkThrough.embeddedEditorBackground": s.ui.bg,
+    "welcomePage.progress.background": s.ui.bgWidget,
+    "welcomePage.progress.foreground": s.ui.accent,
+    "welcomePage.tileBackground": alpha(s.ui.fg, 0.1),
+    "welcomePage.tileBorder": alpha(s.ui.fg, 0.2),
+    "welcomePage.tileHoverBackground": alpha(s.ui.fg, 0.2),
+    "widget.shadow": alpha(s.ui.fg, 0.05)
   },
   name: "Mochi Light",
   semanticHighlighting: true,
   semanticTokenColors: {
     "class.declaration": {
-      foreground: p.violet
+      foreground: s.syntax.type
     },
     "class.decorator": {
-      foreground: p.purple
+      foreground: s.syntax.decorator
     },
     enumMember: {
-      foreground: p.violet
+      foreground: s.syntax.type
     },
     "meta.decorator": {
-      foreground: p.purple
+      foreground: s.syntax.decorator
     },
     namespace: {
-      foreground: p.blue
+      foreground: s.syntax.function
     },
     parameter: {
-      foreground: p.purple
+      foreground: s.syntax.decorator
     },
     property: {
-      foreground: p.orange
+      foreground: s.syntax.property
     },
     "property.declaration": {
-      foreground: p.fg
+      foreground: s.syntax.plain
     },
     variable: {
-      foreground: p.turquoise
+      foreground: s.syntax.variable
     },
     "variable.defaultLibrary": {
-      foreground: p.pine
+      foreground: s.syntax.storage
     }
   },
   tokenColors: [
@@ -507,13 +507,13 @@ export default (p) => ({
         "source.cpp meta.block.class.cpp meta.body.class.cpp meta.function.definition.special.constructor.cpp meta.body.function.definition.special.constructor.cpp"
       ],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
       scope: ["entity.name.type"],
       settings: {
-        foreground: p.lime
+        foreground: s.syntax.typeName
       }
     },
     {
@@ -525,7 +525,7 @@ export default (p) => ({
       ],
       settings: {
         fontStyle: "italic",
-        foreground: alpha(p.fgMuted, 0.7)
+        foreground: alpha(s.syntax.comment, 0.7)
       }
     },
     {
@@ -534,7 +534,7 @@ export default (p) => ({
         "support.constant.core.php"
       ],
       settings: {
-        foreground: p.red
+        foreground: s.syntax.constant
       }
     },
     {
@@ -553,7 +553,7 @@ export default (p) => ({
         "JSXNested"
       ],
       settings: {
-        foreground: p.fg
+        foreground: s.syntax.plain
       }
     },
     {
@@ -568,7 +568,7 @@ export default (p) => ({
         "variable.parameter"
       ],
       settings: {
-        foreground: p.purple
+        foreground: s.syntax.decorator
       }
     },
     {
@@ -577,7 +577,7 @@ export default (p) => ({
         "support.type.object.module"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -603,7 +603,7 @@ export default (p) => ({
         "entity.name.function.powershell"
       ],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -617,7 +617,7 @@ export default (p) => ({
         "keyword.other.import.java"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -682,7 +682,7 @@ export default (p) => ({
         "keyword.operator.pipe.shell"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -691,7 +691,7 @@ export default (p) => ({
         "variable.object.property"
       ],
       settings: {
-        foreground: p.fg
+        foreground: s.syntax.plain
       }
     },
     {
@@ -701,7 +701,7 @@ export default (p) => ({
         "entity.name.tag.yaml"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -718,7 +718,7 @@ export default (p) => ({
         "keyword.operator.math"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -780,7 +780,7 @@ export default (p) => ({
         "meta.tag.attributes.js keyword.operator.assignment.js"
       ],
       settings: {
-        foreground: alpha(p.fg, 0.4)
+        foreground: alpha(s.syntax.punctuation, 0.4)
       }
     },
     {
@@ -797,7 +797,7 @@ export default (p) => ({
         "entity.other.attribute.lua"
       ],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
@@ -839,7 +839,7 @@ export default (p) => ({
         "keyword.storage.modifier"
       ],
       settings: {
-        foreground: p.pine
+        foreground: s.syntax.storage
       }
     },
     {
@@ -875,7 +875,7 @@ export default (p) => ({
         "punctuation.section.parenthese.shell"
       ],
       settings: {
-        foreground: p.green
+        foreground: s.syntax.string
       }
     },
     {
@@ -888,7 +888,7 @@ export default (p) => ({
         "punctuation.definition.string.end.python"
       ],
       settings: {
-        foreground: alpha(p.olive, 0.8)
+        foreground: alpha(s.syntax.docstring, 0.8)
       }
     },
     {
@@ -923,7 +923,7 @@ export default (p) => ({
         "meta.group.simple.subexpression.powershell meta.scriptblock.powershell storage.type.powershell"
       ],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
@@ -956,19 +956,19 @@ export default (p) => ({
         "entity.source.cmake"
       ],
       settings: {
-        foreground: p.turquoise
+        foreground: s.syntax.variable
       }
     },
     {
       scope: ["source.elm constant.type-constructor"],
       settings: {
-        foreground: p.turquoise
+        foreground: s.syntax.variable
       }
     },
     {
       scope: ["source.elm storage.type"],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
@@ -978,7 +978,7 @@ export default (p) => ({
         "support.class.component.html"
       ],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
@@ -989,7 +989,7 @@ export default (p) => ({
         "source.diff punctuation.definition.inserted.diff"
       ],
       settings: {
-        foreground: p.green
+        foreground: s.syntax.string
       }
     },
     {
@@ -1000,13 +1000,13 @@ export default (p) => ({
         "source.diff punctuation.definition.deleted.diff"
       ],
       settings: {
-        foreground: p.red
+        foreground: s.syntax.constant
       }
     },
     {
       scope: ["source.diff meta.diff.header.command"],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -1015,7 +1015,7 @@ export default (p) => ({
         "source.diff meta.diff.range.unified"
       ],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
@@ -1024,7 +1024,7 @@ export default (p) => ({
         "support.class.liquid"
       ],
       settings: {
-        foreground: p.turquoise
+        foreground: s.syntax.variable
       }
     },
     {
@@ -1039,7 +1039,7 @@ export default (p) => ({
         "meta.tag.end.svelte keyword.control.svelte"
       ],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -1058,7 +1058,7 @@ export default (p) => ({
         "invalid.illegal.character-not-allowed-here.html"
       ],
       settings: {
-        foreground: alpha(p.blue, 0.7)
+        foreground: alpha(s.syntax.function, 0.7)
       }
     },
     {
@@ -1069,7 +1069,7 @@ export default (p) => ({
         "meta.embedded.block.blade storage.type.php"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -1081,25 +1081,25 @@ export default (p) => ({
         "markup.raw.block.markdown"
       ],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
       scope: ["fenced_code.block.language"],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
       scope: ["punctuation.definition.list.begin"],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
       scope: ["punctuation.definition.list.begin"],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -1108,13 +1108,13 @@ export default (p) => ({
         "markup.heading.setext"
       ],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
       scope: ["punctuation.definition.heading"],
       settings: {
-        foreground: p.yellow
+        foreground: s.syntax.keyword
       }
     },
     {
@@ -1123,7 +1123,7 @@ export default (p) => ({
         "markup.underline.link.image"
       ],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -1133,7 +1133,7 @@ export default (p) => ({
       ],
       settings: {
         fontStyle: "bold",
-        foreground: p.turquoise
+        foreground: s.syntax.variable
       }
     },
     {
@@ -1142,7 +1142,7 @@ export default (p) => ({
         "punctuation.definition.strikethrough"
       ],
       settings: {
-        foreground: p.red
+        foreground: s.syntax.constant
       }
     },
     {
@@ -1152,7 +1152,7 @@ export default (p) => ({
       ],
       settings: {
         fontStyle: "italic",
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
@@ -1161,13 +1161,13 @@ export default (p) => ({
         "markup.quote.markdown punctuation.definition.quote.begin"
       ],
       settings: {
-        foreground: p.purple
+        foreground: s.syntax.decorator
       }
     },
     {
       scope: ["punctuation.definition.quote.begin"],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     },
     {
@@ -1178,19 +1178,19 @@ export default (p) => ({
       ],
       settings: {
         fontStyle: "italic",
-        foreground: p.fgMuted
+        foreground: s.syntax.comment
       }
     },
     {
       scope: ["entity.other.attribute-name.pseudo-class"],
       settings: {
-        foreground: p.purple
+        foreground: s.syntax.decorator
       }
     },
     {
       scope: ["entity.other.attribute-name.pseudo-element"],
       settings: {
-        foreground: p.purple
+        foreground: s.syntax.decorator
       }
     },
     {
@@ -1199,13 +1199,13 @@ export default (p) => ({
         "entity.other.attribute-name.class punctuation.definition.entity"
       ],
       settings: {
-        foreground: p.pine
+        foreground: s.syntax.storage
       }
     },
     {
       scope: ["entity.other.attribute-name.parent-selector-suffix punctuation.definition.entity"],
       settings: {
-        foreground: p.pine
+        foreground: s.syntax.storage
       }
     },
     {
@@ -1218,7 +1218,7 @@ export default (p) => ({
         "source.css.scss meta.property-list.scss entity.name.tag.css"
       ],
       settings: {
-        foreground: p.fg
+        foreground: s.syntax.plain
       }
     },
     {
@@ -1228,7 +1228,7 @@ export default (p) => ({
         "entity.other.attribute-name.id punctuation.definition.entity"
       ],
       settings: {
-        foreground: p.violet
+        foreground: s.syntax.type
       }
     },
     {
@@ -1237,13 +1237,13 @@ export default (p) => ({
         "meta.property-list"
       ],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
       scope: ["keyword.other.unit"],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
@@ -1254,13 +1254,13 @@ export default (p) => ({
         "meta.attribute.style.html"
       ],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
       scope: ["constant.numeric"],
       settings: {
-        foreground: p.orange
+        foreground: s.syntax.property
       }
     },
     {
@@ -1269,7 +1269,7 @@ export default (p) => ({
         "meta.property-list.scss entity.name.tag.css"
       ],
       settings: {
-        foreground: p.blue
+        foreground: s.syntax.function
       }
     }
   ]

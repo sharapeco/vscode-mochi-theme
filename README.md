@@ -11,10 +11,18 @@
 
 | ファイル | 役割 |
 | --- | --- |
-| `src/palette.mjs` | カラーパレット。**色を変えるときはまずここ** |
-| `src/theme.mjs` | どの UI 項目・トークンにどのパレット色を使うか |
-| `src/color.mjs` | `alpha(color, 0〜1)` などの色ヘルパー |
+| `src/hues.mjs` | ベースカラー。色相ごとの基準色から段階スケール（`gray(100)`, `teal(600)` …）を生成。**HEX はここだけ** |
+| `src/semantic.mjs` | 役割 → ベースカラーの段階（`ui.bg = gray(100)`, `syntax.string = tone.green` …） |
+| `src/theme.mjs` | VSCode の各キー・トークンにどの役割を使うか（semantic のみ参照） |
+| `src/color.mjs` | OKLCH 変換・明度カーブ・スケール生成・`alpha()` |
 | `scripts/build.mjs` | 上記から `themes/mochi-light-color-theme.json` を生成 |
+
+### 色の仕組み
+
+- 段階は 0（白）〜 1000（暗）。**同じ段階番号ならどの色相でも OKLCH 明度が同じ**。
+- 明度カーブは `gray(100)` = 背景 `#f0f1f4`、`brown(900)` = 文字 `#432922` の2点で決まる（この2色は常にそのまま出力）。
+- gray は明るい側が背景の寒色、中間で `#988c82` の暖色へ移り、暗い側は彩度を抑える。
+- 有彩色は基準色の色相・彩度を保ち、明るい段階ほど白へ、暗い段階ほど彩度を抑える。
 | `themes/mochi-light-color-theme.json` | 生成物（直接編集しない） |
 
 ```sh
