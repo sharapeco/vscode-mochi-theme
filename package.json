@@ -9,7 +9,14 @@
   "engines": {
     "vscode": "^1.80.0"
   },
-  "categories": ["Themes"],
+  "categories": [
+    "Themes"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node --watch-path=src scripts/build.mjs",
+    "package": "npm run build && npx @vscode/vsce package"
+  },
   "contributes": {
     "themes": [
       {
