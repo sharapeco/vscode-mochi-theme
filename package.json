@@ -15,7 +15,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "watch": "node --watch-path=src scripts/build.mjs",
-    "package": "npm run build && npx @vscode/vsce package"
+    "package": "npm run build && npx @vscode/vsce package",
+    "preview": "node scripts/preview.mjs"
   },
   "contributes": {
     "themes": [

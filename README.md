@@ -16,6 +16,7 @@
 | `src/theme.mjs` | VSCode の各キー・トークンにどの役割を使うか（semantic のみ参照） |
 | `src/color.mjs` | OKLCH 変換・明度カーブ・スケール生成・`alpha()` |
 | `scripts/build.mjs` | 上記から `themes/mochi-light-color-theme.json` を生成 |
+| `scripts/preview.mjs` | 色見本ページ `preview/palette.html` を生成（gitignore 済み） |
 
 ### 色の仕組み
 
@@ -28,6 +29,7 @@
 ```sh
 npm run build   # 1回ビルド
 npm run watch   # src/ の変更を監視して自動ビルド
+npm run preview # 色見本ページ preview/palette.html を生成
 ```
 
 ビルド後、VSCode で `Developer: Reload Window` すると反映されます。
