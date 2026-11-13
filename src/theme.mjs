@@ -427,7 +427,7 @@ export default (s) => ({
     "terminalStickyScrollHover.background": s.ui.bgWidgetAlt,
     "textBlockQuote.background": alpha(s.status.info, 0.2),
     "textBlockQuote.border": alpha(s.status.info, 0.73),
-    "textCodeBlock.background": alpha(s.status.info, 0.2),
+    "textCodeBlock.background": s.ui.preformatBg,
     "textLink.activeForeground": s.ui.accent,
     "textLink.foreground": s.ui.accent,
     "textPreformat.background": s.ui.preformatBg,

@@ -421,11 +421,11 @@
     "terminalStickyScrollHover.background": "#f5f5f7",
     "textBlockQuote.background": "#0d82d033",
     "textBlockQuote.border": "#0d82d0ba",
-    "textCodeBlock.background": "#0d82d033",
+    "textCodeBlock.background": "#f3e4c780",
     "textLink.activeForeground": "#078f91",
     "textLink.foreground": "#078f91",
-    "textPreformat.background": "#deb662",
-    "textPreformat.foreground": "#221700",
+    "textPreformat.background": "#f3e4c780",
+    "textPreformat.foreground": "#402d00",
     "textSeparator.foreground": "#078f91",
     "titleBar.activeBackground": "#d0ccca",
     "titleBar.activeForeground": "#43292299",
@@ -521,7 +521,7 @@
       ],
       "settings": {
         "fontStyle": "italic",
-        "foreground": "#c8e4e4b3"
+        "foreground": "#078f91b3"
       }
     },
     {
@@ -1190,7 +1190,7 @@
       ],
       "settings": {
         "fontStyle": "italic",
-        "foreground": "#c8e4e4"
+        "foreground": "#078f91"
       }
     },
     {

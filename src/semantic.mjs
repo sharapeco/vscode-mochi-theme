@@ -3,6 +3,7 @@
 //   - 役割単位で変える → ここで段階や色相を差し替える
 //   - 色相そのものを変える → hues.mjs の基準色を変える
 
+import { alpha } from "./color.mjs";
 import { gray, brown, teal, cyan, blue, violet, purple, red, orange, yellow, lime, green } from "./hues.mjs";
 
 // 各色相の「標準のトーン」。シンタックス・ステータス・チャートなどで共有する。
@@ -59,8 +60,8 @@ const ui = {
   cursor: tone.yellow,
   highlight: tone.yellow, // リスト・サジェストの一致部分、リンク、プログレスバー
   linkedEditing: tone.blue,
-  preformatBg: yellow(350),
-  preformatFg: yellow(1000),
+  preformatBg: alpha(yellow(160), 0.5),
+  preformatFg: yellow(900),
 };
 
 const status = {
@@ -93,10 +94,10 @@ const diff = {
 const syntax = {
   plain: ui.fg,
   punctuation: ui.fg, // theme 側で透明度をかけて使う
-  comment: teal(200),
+  comment: tone.teal, // コメント・ドキュメントコメント
   keyword: tone.darkGreen, // 制御構文・import/export・演算子
   storage: tone.red, // const / function / class など
-  string: tone.green,
+  string: tone.green, // 文字列・正規表現
   docstring: tone.olive,
   function: tone.indigo, // 関数・タグ名
   type: tone.orange, // 型・クラス・enum
