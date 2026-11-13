@@ -1,6 +1,6 @@
 // テーマ本体。色はすべて semantic.mjs の役割名で参照する（hues.mjs は直接使わない）。
 // alpha(color, 0〜1) で透明度を付けられる。
-// 編集後は `npm run build` で themes/*.json を再生成すること。
+// 編集後は `nr build` で themes/*.json を再生成すること。
 
 import { alpha } from "./color.mjs";
 

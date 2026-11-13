@@ -17,16 +17,16 @@ const L = lightnessCurve({ 100: BG, 900: FG });
 export const gray = grayScale(L, { light: BG, mid: "#988c82" });
 
 export const brown = scale(L, FG);
-export const teal = scale(L, "#218d8f");
-export const cyan = scale(L, "#19b6c4");
-export const blue = scale(L, "#1197f0");
-export const violet = scale(L, "#6d5ad9");
-export const purple = scale(L, "#ae6cbe");
 export const red = scale(L, "#d24545");
 export const orange = scale(L, "#e97500");
 export const yellow = scale(L, "#d29d00");
 export const lime = scale(L, "#72a317");
 export const green = scale(L, "#12a349");
+export const teal = scale(L, "#099da0");
+export const cyan = scale(L, "#0ab1d2");
+export const blue = scale(L, "#1197f0");
+export const violet = scale(L, "#6d5ad9");
+export const purple = scale(L, "#ae6cbe");
 
 /** 明度 → 段階番号（パレット調整用） */
 export const stepOf = L.stepOf;

@@ -7,18 +7,21 @@ import { gray, brown, teal, cyan, blue, violet, purple, red, orange, yellow, lim
 
 // 各色相の「標準のトーン」。シンタックス・ステータス・チャートなどで共有する。
 const tone = {
+  pink: red(450),
   red: red(600),
-  orange: orange(525),
-  yellow: yellow(525),
+  orange: orange(550),
+  yellow: yellow(500),
   lime: lime(500),
-  olive: lime(675),
+  olive: lime(650),
   green: green(550),
+  darkGreen: green(750),
   cyan: cyan(500),
   teal: teal(600),
-  pine: teal(700),
-  blue: blue(575),
-  violet: violet(575),
-  purple: purple(550),
+  pine: teal(750),
+  blue: blue(600),
+  indigo: blue(750),
+  violet: violet(600),
+  purple: purple(600),
 };
 
 const ui = {
@@ -90,16 +93,16 @@ const diff = {
 const syntax = {
   plain: ui.fg,
   punctuation: ui.fg, // theme 側で透明度をかけて使う
-  comment: ui.fgMuted,
-  keyword: tone.yellow, // 制御構文・import/export・演算子
-  storage: tone.pine, // const / function / class など
+  comment: teal(200),
+  keyword: tone.darkGreen, // 制御構文・import/export・演算子
+  storage: tone.red, // const / function / class など
   string: tone.green,
   docstring: tone.olive,
-  function: tone.blue, // 関数・タグ名
-  type: tone.violet, // 型・クラス・enum
+  function: tone.indigo, // 関数・タグ名
+  type: tone.orange, // 型・クラス・enum
   typeName: tone.lime,
-  variable: tone.cyan,
-  property: tone.orange, // プロパティ・数値・this
+  variable: tone.olive, // 変数・プロパティ・引数
+  property: tone.pine, // プロパティ・数値・this
   constant: tone.red,
   decorator: tone.purple, // デコレータ・パラメータ
 };
