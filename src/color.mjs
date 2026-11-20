@@ -83,19 +83,47 @@ export function alpha(hex, a) {
  * @param {Record<number, string>} anchors 例: { 100: bg, 900: fg }
  */
 export function lightnessCurve(anchors) {
-  const [[s1, c1], [s2, c2]] = Object.entries(anchors).map(([s, c]) => [Number(s), c]);
+  const [[s1, c1], [s2, c2]] = parseAnchors(anchors);
   const d1 = 1 - hexToOklab(c1).L;
   const d2 = 1 - hexToOklab(c2).L;
   const gamma = Math.log(d2 / d1) / Math.log(s2 / s1);
   const k = d1 / (s1 / 1000) ** gamma;
   const curve = (step) => {
-    if (!(step >= 0 && step <= 1000)) throw new Error(`step out of range: ${step}`);
+    checkStep(step);
     return 1 - k * (step / 1000) ** gamma;
   };
   /** 明度 → 段階番号（逆関数） */
   curve.stepOf = (L) => 1000 * ((1 - L) / k) ** (1 / gamma);
   return curve;
 }
+
+/**
+ * 既存のカーブを明度方向に線形変換して、別の2色をアンカーにしたカーブを作る（ダークテーマ用）。
+ * 段階どうしの明度差の比率が元のカーブと同じになるので、ライトと同じ段階番号を同じ感覚で使える。
+ * アンカーの明暗が逆なら、段階 0 は黒側・大きいほど明るいカーブになる。範囲外の明度は 0〜1 に丸める。
+ * @param {ReturnType<typeof lightnessCurve>} base
+ * @param {Record<number, string>} anchors base と同じ段階番号で指定する。例: { 100: darkBg, 900: lightFg }
+ */
+export function mirroredCurve(base, anchors) {
+  const [[s1, c1], [s2, c2]] = parseAnchors(anchors);
+  const [b1, b2] = [base(s1), base(s2)];
+  const [t1, t2] = [hexToOklab(c1).L, hexToOklab(c2).L];
+  const m = (t2 - t1) / (b2 - b1);
+  const curve = (step) => {
+    checkStep(step);
+    return Math.min(1, Math.max(0, t1 + (base(step) - b1) * m));
+  };
+  curve.stepOf = (L) => base.stepOf(b1 + (L - t1) / m);
+  return curve;
+}
+
+const parseAnchors = (anchors) => Object.entries(anchors).map(([s, c]) => [Number(s), c]);
+const checkStep = (step) => {
+  if (!(step >= 0 && step <= 1000)) throw new Error(`step out of range: ${step}`);
+};
+
+/** 基準明度 refL より明るければ白へ、暗ければ黒へ向かって彩度を 0 にする係数 */
+const chromaFactor = (L, refL) => (L >= refL ? (1 - L) / (1 - refL) : L / refL);
 
 /**
  * 有彩色のスケール。基準色の色相・彩度を保ち、明度だけをカーブに合わせる。
@@ -107,30 +135,33 @@ export function scale(curve, base) {
   const o = hexToOklab(base);
   return (step) => {
     const L = curve(step);
-    const f = L >= o.L ? (1 - L) / (1 - o.L) : L / o.L;
+    const f = chromaFactor(L, o.L);
     return oklabToHex({ L, a: o.a * f, b: o.b * f });
   };
 }
 
 /**
- * グレーのスケール。明るい側は light の色味、中間で mid の色味へ OKLab 上で直線的に移る
- * （途中で無彩色を経由する）。mid より暗い側は L に比例して彩度を下げる。
+ * グレーのスケール。段階 0 〜 near（背景側）までは near の色味、near → far の間で
+ * far の色味へ OKLab 上で直線的に移る（途中で無彩色を経由する）。far より先は彩度を抑える。
+ * 領域は段階番号で判定するので、ライト（大きいほど暗い）でもダーク（大きいほど明るい）でも使える。
  * @returns {(step: number) => string}
  */
-export function grayScale(curve, { light, mid }) {
-  const p = hexToOklab(light);
-  const q = hexToOklab(mid);
+export function grayScale(curve, { near, far }) {
+  const p = hexToOklab(near);
+  const q = hexToOklab(far);
+  const sp = curve.stepOf(p.L);
+  const sq = curve.stepOf(q.L);
   return (step) => {
     const L = curve(step);
     let a, b;
-    if (L >= p.L) {
-      const f = (1 - L) / (1 - p.L);
+    if (step <= sp) {
+      const f = chromaFactor(L, p.L);
       [a, b] = [p.a * f, p.b * f];
-    } else if (L >= q.L) {
+    } else if (step <= sq) {
       const t = (p.L - L) / (p.L - q.L);
       [a, b] = [p.a + (q.a - p.a) * t, p.b + (q.b - p.b) * t];
     } else {
-      const f = L / q.L;
+      const f = chromaFactor(L, q.L);
       [a, b] = [q.a * f, q.b * f];
     }
     return oklabToHex({ L, a, b });

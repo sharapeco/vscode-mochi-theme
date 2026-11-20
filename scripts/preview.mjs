@@ -1,16 +1,29 @@
-// 色見本ページ preview/palette.html を生成する（生成物は gitignore）。
+// 色見本ページ preview/palette-{light,dark}.html を生成する（生成物は gitignore）。
 import { mkdirSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import * as H from "../src/hues.mjs";
-import S from "../src/semantic.mjs";
+import * as allHues from "../src/hues.mjs";
+import * as semantic from "../src/semantic.mjs";
 import { hexToOklab } from "../src/color.mjs";
+
+const outDir = fileURLToPath(new URL("../preview/", import.meta.url));
+mkdirSync(outDir, { recursive: true });
+for (const variant of ["light", "dark"]) {
+  const file = `${outDir}palette-${variant}.html`;
+  writeFileSync(file, page(variant));
+  console.log(`built ${file}`);
+}
+
+function page(variant) {
+const H = allHues[variant];
+const S = semantic[variant];
+const title = `Mochi ${variant[0].toUpperCase()}${variant.slice(1)} Palette`;
 // hues.mjs の export のうち色相スケール（関数）を、無彩色寄り → 色相角の順に並べる
 const hueAngle = (name) => {
   const { a, b } = hexToOklab(H[name](500));
   return Math.hypot(a, b) < 0.03 ? -1 : (Math.atan2(b, a) * 180) / Math.PI + (b < 0 ? 360 : 0);
 };
 const hues = Object.keys(H)
-  .filter((k) => k !== "stepOf" && typeof H[k] === "function")
+  .filter((k) => k !== "stepOf" && k !== "curve" && typeof H[k] === "function")
   .sort((x, y) => hueAngle(x) - hueAngle(y) || x.localeCompare(y));
 const steps = Array.from({ length: 21 }, (_, i) => i * 50);
 const txt = (hex) => (hexToOklab(hex).L > 0.62 ? "#2a211d" : "#fbfaf8");
@@ -24,7 +37,7 @@ const code = `<span style="color:${sy.storage}">import</span> <span style="color
   <span style="color:${sy.keyword}">if</span> <span style="color:${sy.punctuation}99">(</span><span style="color:${sy.decorator}">step</span> <span style="color:${sy.keyword}">&gt;</span> <span style="color:${sy.property}">1000</span><span style="color:${sy.punctuation}99">)</span> <span style="color:${sy.keyword}">return</span> <span style="color:${sy.constant}">null</span><span style="color:${sy.punctuation}99">;</span>
   <span style="color:${sy.keyword}">return</span> <span style="color:${sy.plain}">gray</span><span style="color:${sy.punctuation}99">(</span><span style="color:${sy.decorator}">step</span><span style="color:${sy.punctuation}99">).</span><span style="color:${sy.property}">length</span><span style="color:${sy.punctuation}99">;</span>
 <span style="color:${sy.punctuation}99">}</span>`;
-const html = `<title>Mochi Light Palette</title>
+return `<title>${title}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+JP:wght@400;500;600&display=swap">
@@ -67,12 +80,9 @@ td span{display:block;padding:0 2px 4px;opacity:.75}
 .hex{color:var(--muted)}
 </style>
 <main>
-<header><h1>Mochi Light Palette</h1><p class="lead">色相ごとのスケール（段階 0〜1000、同じ段階は同じ OKLCH 明度）と、そこから割り当てたセマンティックカラー。gray(100) = 背景、brown(900) = 文字。</p></header>
+<header><h1>${title}</h1><p class="lead">色相ごとのスケール（段階 0〜1000、同じ段階は同じ OKLCH 明度）と、そこから割り当てたセマンティックカラー。gray(100) = 背景、brown(900) = 文字。</p></header>
 <section><h2>ベース（hues.mjs）</h2><div class="scroll"><table>${head}\n${rows}</table></div></section>
 <section><h2>プレビュー</h2><div class="preview"><div class="win"><div class="bar">mochi-theme — widget.ts</div><div class="body"><div class="side"><span class="on">widget.ts</span><span>color.mjs</span><span>hues.mjs</span><span>semantic.mjs</span></div><pre>${code}</pre></div><div class="status"><span>main</span><b>✕ 1</b><em>⚠ 2</em></div></div></div></section>
 <section><h2>セマンティック（semantic.mjs）</h2><div class="groups">${roleGroup("tone", S.tone)}${roleGroup("ui", S.ui)}${roleGroup("syntax", S.syntax)}${roleGroup("status", S.status)}${roleGroup("diff", S.diff)}${roleGroup("ansi", S.ansi)}</div></section>
 </main>`;
-const outDir = fileURLToPath(new URL("../preview/", import.meta.url));
-mkdirSync(outDir, { recursive: true });
-writeFileSync(`${outDir}palette.html`, html);
-console.log(`built ${outDir}palette.html`);
+}
